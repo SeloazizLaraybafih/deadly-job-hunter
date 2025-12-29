@@ -1,13 +1,21 @@
 require('dotenv').config()
 const express = require('express')
 const db = require('./db')
-const app = express()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const cors = require('cors')
 
+const app = express()
+
+app.use(
+  cors({
+    origin: 'http://localhost:3001',
+    credentials: true,
+  })
+)
 app.use(express.json())
 
-app.get('/test-db', (req, res) => {
+app.get('/api/test-db', (req, res) => {
   db.query('SELECT 1', (err, result) => {
     if (err) {
       return res.status(500).json({ message: 'Archive not responding' })
