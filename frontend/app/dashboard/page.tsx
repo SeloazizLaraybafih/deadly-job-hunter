@@ -56,9 +56,9 @@ export default function DashboardPage() {
           <h2 className='text-xl font-semibold mb-4'>Recent Activity</h2>
 
           <ul className='space-y-3 text-muted-foreground'>
-            <li>✅ Applied to Frontend Intern at Company A</li>
-            <li>📞 Interview scheduled with Company B</li>
-            <li>❌ \Rejected by Company C</li>
+            <li>Applied to Frontend Intern at Company A</li>
+            <li>Interview scheduled with Company B</li>
+            <li>Rejected by Company C</li>
           </ul>
         </div>
       </div>

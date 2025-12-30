@@ -24,7 +24,7 @@ export default function LoginPage() {
       })
       // save token
       localStorage.setItem('token', data.token)
-      // go to dashboard (later)
+      // go to dashboard
       router.push('/dashboard')
     } catch (err) {
       if (err instanceof Error) {
@@ -99,12 +99,6 @@ export default function LoginPage() {
                 >
                   Password
                 </label>
-                <button
-                  type='button'
-                  className='text-sm text-primary hover:text-primary/80 transition-colors'
-                >
-                  Forgot password?
-                </button>
               </div>
               <input
                 id='password'
