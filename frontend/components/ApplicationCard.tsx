@@ -37,7 +37,7 @@ type ApplicationCardProps = {
   company: string
   position: string
   status: Status
-  date: string
+  date?: string
   notes?: string
   onDelete?: (id: number) => void
   onUpdate?: (id: number) => void

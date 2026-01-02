@@ -4,9 +4,20 @@ import { useState } from 'react'
 import { apiFetch } from '@/lib/api'
 import { useRouter } from 'next/navigation'
 
+type Application = {
+  id: number
+  company_name: string
+  position: string
+  status: Status
+  applied_date?: string | null
+  notes?: string
+}
+
 type Props = {
   open: boolean
   onClose: () => void
+  initialData?: Application
+  onSuccess?: (app: Application) => void
 }
 
 type Status =
@@ -16,11 +27,17 @@ type Status =
   | 'offered'
   | 'rejected'
 
-export default function NewApplicationModal({ open, onClose }: Props) {
-  const [company, setCompany] = useState('')
-  const [position, setPosition] = useState('')
-  const [status, setStatus] = useState<Status>('applied')
-  const [notes, setNotes] = useState('')
+export default function NewApplicationModal({
+  open,
+  onClose,
+  initialData,
+  onSuccess,
+}: Props) {
+  const [company, setCompany] = useState(initialData?.company_name ?? '')
+  const [position, setPosition] = useState(initialData?.position ?? '')
+  const [status, setStatus] = useState<Status>(initialData?.status ?? 'applied')
+  const [notes, setNotes] = useState(initialData?.notes ?? '')
+
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
@@ -31,8 +48,14 @@ export default function NewApplicationModal({ open, onClose }: Props) {
     setError('')
 
     try {
-      await apiFetch('/applications', {
-        method: 'POST',
+      const endpoint = initialData
+        ? `/applications/${initialData.id}`
+        : '/applications'
+
+      const method = initialData ? 'PUT' : 'POST'
+
+      const data = await apiFetch(endpoint, {
+        method,
         body: JSON.stringify({
           company_name: company,
           position,
@@ -40,12 +63,14 @@ export default function NewApplicationModal({ open, onClose }: Props) {
           notes,
         }),
       })
+      console.log('CREATE RESPONSE:', data)
+      console.log('data:', data.application)
 
-      window.location.reload()
+      onSuccess?.(data)
       onClose()
     } catch (err) {
       if (err instanceof Error) setError(err.message)
-      else setError('Failed to create application')
+      else setError('Failed to save application')
     } finally {
       setLoading(false)
     }

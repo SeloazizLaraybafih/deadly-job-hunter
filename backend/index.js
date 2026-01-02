@@ -166,7 +166,12 @@ app.post('/api/applications', authenticateToken, (req, res) => {
 
       res.status(201).json({
         message: 'Application added successfully',
-        application_id: result.insertId,
+        id: result.insertId,
+        company_name,
+        position,
+        status,
+        notes,
+        applied_date: new Date().toISOString(),
       })
     }
   )

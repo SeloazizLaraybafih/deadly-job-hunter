@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 
 import ApplicationCard from '@/components/ApplicationCard'
 import NewApplicationModal from '@/components/NewAppPostModal'
-import UpdateAppModal from '@/components/UpdateAppModal'
 
 type Application = {
   id: number
@@ -66,7 +65,7 @@ export default function TesPage() {
               company={app.company_name}
               position={app.position}
               status={app.status}
-              date={app.applied_date.split('T')[0]}
+              date={app.applied_date?.split('T')[0]}
               notes={app.notes}
               onDelete={handleDelete}
               onUpdate={handleOpenUpdate}
@@ -85,12 +84,17 @@ export default function TesPage() {
         onClose={() => setOpenModal(false)}
       />
       {editingApp && (
-        <UpdateAppModal
-          application={editingApp}
+        <NewApplicationModal
+          open={true}
+          initialData={editingApp}
           onClose={() => setEditingApp(null)}
-          onUpdated={(updatedApp) => {
+          onSuccess={(updatedApp) => {
+            if (!updatedApp) return
+
             setApplications((prev) =>
-              prev.map((app) => (app.id === updatedApp.id ? updatedApp : app))
+              prev.map((app) =>
+                app.id === updatedApp.id ? { ...app, ...updatedApp } : app
+              )
             )
           }}
         />
