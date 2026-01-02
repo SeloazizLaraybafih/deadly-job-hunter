@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { apiFetch } from '@/lib/api'
 import ApplicationCard from '@/components/ApplicationCard'
 import NewApplicationModal from '@/components/NewAppPostModal'
+import Image from 'next/image'
 
 type Application = {
   id: number
@@ -87,20 +88,23 @@ export default function DashboardPage() {
       <div className='max-w-4xl mx-auto'>
         {/* Header */}
         <div className='flex flex-col items-center justify-between mb-8'>
-          {/* <div className='w-full flex justify-center mb-20'>
-            <h1 className='text-3xl font-bold text-foreground'>
-              JOB HUNTA APP
-            </h1>
-          </div> */}
           <div className='w-full flex justify-between'>
             {' '}
-            <h1 className='text-3xl font-bold text-foreground'>Job Huntaaa</h1>
-            <button
-              onClick={handleLogout}
-              className='px-4 py-2 rounded-lg bg-destructive text-destructive-foreground hover:opacity-90 transition'
-            >
-              Logout
-            </button>
+            <Image
+              src='/images/sirjobsir-squid-dashboard-1.png'
+              alt='Logo'
+              width={150}
+              height={150}
+              priority
+            />
+            <div className='flex flex-col justify-end'>
+              <button
+                onClick={handleLogout}
+                className='px-4 py-2 rounded-lg bg-destructive text-destructive-foreground hover:opacity-90 transition cursor-pointer'
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </div>
 
@@ -124,9 +128,9 @@ export default function DashboardPage() {
         <div className='w-full flex justify-end'>
           <button
             onClick={() => setOpenModal(true)}
-            className=' bg-blue-600 text-white px-4 py-2 rounded'
+            className=' bg-blue-600 text-white px-4 py-2 rounded cursor-pointer'
           >
-            + New Application
+            Add Application
           </button>
         </div>
 

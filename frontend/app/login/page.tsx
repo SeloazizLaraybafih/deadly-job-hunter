@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { apiFetch } from '@/lib/api'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -45,29 +46,21 @@ export default function LoginPage() {
     <div className='min-h-screen flex items-center justify-center bg-background p-4'>
       <div className='w-full max-w-md'>
         {/* Logo/Brand */}
-        <div className='text-center mb-8'>
-          <div className='inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary mb-4'>
-            <svg
-              className='w-7 h-7 text-primary-foreground'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M13 10V3L4 14h7v7l9-11h-7z'
-              />
-            </svg>
+        <div className='text-center flex'>
+          <div className='inline-flex items-end justify-end rounded-xl mb-4'>
+            <Image
+              src='/images/sirjobsir-squid-front.png'
+              alt='Logo'
+              width={150}
+              height={150}
+              priority
+            />
           </div>
-          <h1 className='text-3xl font-bold text-foreground mb-2'>
-            Welcome back
-          </h1>
-          <p className='text-muted-foreground text-sm'>
-            Enter your credentials to access your account
-          </p>
+          <div className='flex flex-col justify-center'>
+            <h1 className='text-3xl font-bold text-foreground mb-2'>
+              Login here buddy
+            </h1>
+          </div>
         </div>
 
         {/* Login Form */}
