@@ -23,13 +23,12 @@ const progressStatus: Application['status'][] = [
   'rejected',
 ]
 
-const rejectedStatus: Application['status'][] = ['rejected']
-
 export default function DashboardPage() {
   const router = useRouter()
   const [openModal, setOpenModal] = useState(false)
   const [applications, setApplications] = useState<Application[]>([])
   const [editingApp, setEditingApp] = useState<Application | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -39,12 +38,15 @@ export default function DashboardPage() {
     }
 
     async function fetchApplications() {
+      setLoading(true)
       try {
         const data = await apiFetch('/applications')
         console.log('APPLICATIONS RESPONSE:', data)
         setApplications(data.applications)
       } catch (err) {
         console.error('FETCH ERROR:', err)
+      } finally {
+        setLoading(false)
       }
     }
     fetchApplications()
@@ -83,6 +85,17 @@ export default function DashboardPage() {
     ((progressApp.length / applications.length) * 100).toFixed(1)
   )
 
+  if (loading) {
+    return (
+      <div className='h-screen w-full flex items-center justify-center bg-gray-50'>
+        <div className='flex flex-col justify-center items-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid mb-4'></div>
+          <p className='text-gray-700 font-medium'>Loading applications...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className='min-h-screen bg-background p-8'>
       <div className='max-w-4xl mx-auto'>
@@ -96,11 +109,12 @@ export default function DashboardPage() {
               width={150}
               height={150}
               priority
+              className='max-[460px]:w-24'
             />
             <div className='flex flex-col justify-end'>
               <button
                 onClick={handleLogout}
-                className='px-4 py-2 rounded-lg bg-destructive text-destructive-foreground hover:opacity-90 transition cursor-pointer'
+                className='px-4 py-2 rounded-lg bg-destructive text-destructive-foreground max-[460px]:text-xs max-[460px]:px-3 max-[460px]:py-2  hover:opacity-90 transition cursor-pointer'
               >
                 Logout
               </button>
@@ -109,23 +123,23 @@ export default function DashboardPage() {
         </div>
 
         {/* Stats */}
-        <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6'>
-          <div className='bg-card border border-border rounded-xl p-6'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6 sm:mb-6'>
+          <div className='bg-card border border-border rounded-xl p-6 text-center'>
             <p className='text-sm text-muted-foreground'>Applications</p>
             <p className='text-3xl font-bold mt-2'>{applications.length}</p>
           </div>
 
-          <div className='bg-card border border-border rounded-xl p-6'>
+          <div className='bg-card border border-border rounded-xl p-6 text-center'>
             <p className='text-sm text-muted-foreground'>Responded</p>
             <p className='text-3xl font-bold mt-2'>{progressApp.length}</p>
           </div>
 
-          <div className='bg-card border border-border rounded-xl p-6'>
+          <div className='col-span-2 sm:col-span-1 bg-card border border-border rounded-xl p-6 text-center'>
             <p className='text-sm text-muted-foreground'>Response Rate</p>
             <p className='text-3xl font-bold mt-2'>{respondedRate}%</p>
           </div>
         </div>
-        <div className='w-full flex justify-end'>
+        <div className='w-full flex justify-center sm:justify-end'>
           <button
             onClick={() => setOpenModal(true)}
             className=' bg-blue-600 text-white px-4 py-2 rounded cursor-pointer'

@@ -54,10 +54,11 @@ export default function LoginPage() {
               width={150}
               height={150}
               priority
+              className='max-[321px]:w-24'
             />
           </div>
           <div className='flex flex-col justify-center'>
-            <h1 className='text-3xl font-bold text-foreground mb-2'>
+            <h1 className='max-[321px]:text-sm text-xl sm:text-3xl font-bold text-foreground mb-2'>
               Login here buddy
             </h1>
           </div>
@@ -80,7 +81,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className='w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all'
+                className='w-full px-4 py-3 bg-input border border-border rounded-lg placeholder:text-xs sm:placeholder:text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all'
               />
             </div>
 
@@ -100,7 +101,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className='w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all'
+                className='w-full px-4 py-3 bg-input border border-border rounded-lg placeholder:text-xs sm:placeholder:text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all'
               />
             </div>
 

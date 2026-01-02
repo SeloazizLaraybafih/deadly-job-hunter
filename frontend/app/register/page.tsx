@@ -61,11 +61,12 @@ export default function RegisterPage() {
               width={150}
               height={150}
               priority
+              className='max-[321px]:w-24'
             />
           </div>
           <div className='flex flex-col justify-center'>
-            <h1 className='text-3xl font-bold text-foreground mb-2'>
-              Create ur acc dawg
+            <h1 className='max-[321px]:text text-xl sm:text-3xl font-bold text-foreground mb-2'>
+              Regist ur acc dawg
             </h1>
           </div>
         </div>
@@ -74,12 +75,17 @@ export default function RegisterPage() {
         <div className='bg-card border border-border rounded-2xl p-8 shadow-lg'>
           <form onSubmit={handleRegister} className='space-y-6'>
             <div className='space-y-2'>
-              <label
-                htmlFor='email'
-                className='text-sm font-medium text-card-foreground block'
-              >
-                Email
-              </label>
+              <div className='flex'>
+                <label
+                  htmlFor='email'
+                  className='text-sm font-medium text-card-foreground block mr-2'
+                >
+                  {`Email`}
+                </label>
+                <span className='text-xs'>{` (Just use imaginary email and password, gw males bikin
+                    feature email verif lol. but it still have to match when u login)`}</span>
+              </div>
+
               <input
                 id='email'
                 type='email'
@@ -87,7 +93,7 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className='w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all'
+                className='w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder:text-xs sm:placeholder:text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all'
               />
             </div>
 
@@ -107,14 +113,14 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className='w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all'
+                className='w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder:text-xs sm:placeholder:text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all'
               />
             </div>
 
             <div className='space-y-2'>
               <label
                 htmlFor='confirmPassword'
-                className='text-sm font-medium text-card-foreground block'
+                className='text-sm font-medium text-card-foreground block '
               >
                 Confirm Password
               </label>
@@ -126,7 +132,7 @@ export default function RegisterPage() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                className='w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all'
+                className='w-full px-4 py-3 bg-input border border-border rounded-lg placeholder:text-xs sm:placeholder:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all'
               />
             </div>
 
