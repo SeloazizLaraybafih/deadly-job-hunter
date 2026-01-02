@@ -64,7 +64,6 @@ export default function NewApplicationModal({
         }),
       })
       console.log('CREATE RESPONSE:', data)
-      console.log('data:', data.application)
 
       onSuccess?.(data)
       onClose()

@@ -170,8 +170,8 @@ app.post('/api/applications', authenticateToken, (req, res) => {
         company_name,
         position,
         status,
-        notes,
         applied_date: new Date().toISOString(),
+        notes,
       })
     }
   )
@@ -210,7 +210,15 @@ app.put('/api/applications/:id', authenticateToken, (req, res) => {
           .json({ message: 'Application not found or not yours' })
       }
 
-      res.json({ message: 'Application updated successfully' })
+      res.json({
+        message: 'Application updated successfully',
+        id: Number(req.params.id),
+        company_name,
+        position,
+        status,
+        applied_date: new Date().toISOString(),
+        notes,
+      })
     }
   )
 })

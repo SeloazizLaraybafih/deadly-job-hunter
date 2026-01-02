@@ -15,6 +15,15 @@ type Application = {
   notes?: string
 }
 
+const progressStatus: Application['status'][] = [
+  'onProcess',
+  'finalInterview',
+  'offered',
+  'rejected',
+]
+
+const rejectedStatus: Application['status'][] = ['rejected']
+
 export default function DashboardPage() {
   const router = useRouter()
   const [openModal, setOpenModal] = useState(false)
@@ -65,36 +74,60 @@ export default function DashboardPage() {
     }
   }
 
+  const progressApp = applications.filter((app) =>
+    progressStatus.includes(app.status)
+  )
+
+  const respondedRate = Number(
+    ((progressApp.length / applications.length) * 100).toFixed(1)
+  )
+
   return (
     <div className='min-h-screen bg-background p-8'>
       <div className='max-w-4xl mx-auto'>
         {/* Header */}
-        <div className='flex items-center justify-between mb-8'>
-          <h1 className='text-3xl font-bold text-foreground'>Dashboard</h1>
-          <button
-            onClick={handleLogout}
-            className='px-4 py-2 rounded-lg bg-destructive text-destructive-foreground hover:opacity-90 transition'
-          >
-            Logout
-          </button>
+        <div className='flex flex-col items-center justify-between mb-8'>
+          {/* <div className='w-full flex justify-center mb-20'>
+            <h1 className='text-3xl font-bold text-foreground'>
+              JOB HUNTA APP
+            </h1>
+          </div> */}
+          <div className='w-full flex justify-between'>
+            {' '}
+            <h1 className='text-3xl font-bold text-foreground'>Job Huntaaa</h1>
+            <button
+              onClick={handleLogout}
+              className='px-4 py-2 rounded-lg bg-destructive text-destructive-foreground hover:opacity-90 transition'
+            >
+              Logout
+            </button>
+          </div>
         </div>
 
         {/* Stats */}
-        <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10'>
+        <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6'>
           <div className='bg-card border border-border rounded-xl p-6'>
             <p className='text-sm text-muted-foreground'>Applications</p>
-            <p className='text-3xl font-bold mt-2'>12</p>
+            <p className='text-3xl font-bold mt-2'>{applications.length}</p>
           </div>
 
           <div className='bg-card border border-border rounded-xl p-6'>
-            <p className='text-sm text-muted-foreground'>Interviews</p>
-            <p className='text-3xl font-bold mt-2'>3</p>
+            <p className='text-sm text-muted-foreground'>Responded</p>
+            <p className='text-3xl font-bold mt-2'>{progressApp.length}</p>
           </div>
 
           <div className='bg-card border border-border rounded-xl p-6'>
-            <p className='text-sm text-muted-foreground'>Rejected</p>
-            <p className='text-3xl font-bold mt-2'>5</p>
+            <p className='text-sm text-muted-foreground'>Response Rate</p>
+            <p className='text-3xl font-bold mt-2'>{respondedRate}%</p>
           </div>
+        </div>
+        <div className='w-full flex justify-end'>
+          <button
+            onClick={() => setOpenModal(true)}
+            className=' bg-blue-600 text-white px-4 py-2 rounded'
+          >
+            + New Application
+          </button>
         </div>
 
         {/* Content */}
@@ -115,12 +148,7 @@ export default function DashboardPage() {
             ))}
           </div>
         </div>
-        <button
-          onClick={() => setOpenModal(true)}
-          className='mb-6 bg-blue-600 text-white px-4 py-2 rounded'
-        >
-          + New Application
-        </button>
+
         <NewApplicationModal
           open={openModal}
           onClose={() => setOpenModal(false)}
