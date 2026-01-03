@@ -7,6 +7,8 @@ const cors = require('cors')
 
 const app = express()
 
+const PORT = process.env.PORT || 5000
+
 app.use(
   cors({
     origin: 'http://localhost:3001',
@@ -245,6 +247,6 @@ app.delete('/api/applications/:id', authenticateToken, (req, res) => {
   })
 })
 
-app.listen(3000, () => {
-  console.log('Server running on port 3000')
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
 })

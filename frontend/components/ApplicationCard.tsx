@@ -100,19 +100,22 @@ export default function ApplicationCard({
       </div>
 
       {/*Mobile*/}
-      <div className='hidden rounded-r-md max-[640px]:flex justify-end items-start gap-1 mt-3 mr-3'>
+      <div className='hidden rounded-r-md max-[640px]:flex max-[640px]:flex-col max-[640px]:justify-between items-start gap-1 mt-3 mr-3'>
+        <div className='max-[640px]:flex relative left-7'>
+          <button
+            onClick={() => onDelete?.(id)}
+            className='bg-red-600 rounded-sm px-3 py-1 text-gray-50 cursor-pointer '
+          >
+            ×
+          </button>
+        </div>
+
         <button
           onClick={() => onUpdate?.(id)}
-          className='bg-blue-500 rounded-sm px-3 py-1 text-gray-50 cursor-pointer'
+          className='bg-blue-500 rounded-sm px-2 py-1 text-sm text-gray-50 cursor-pointer mb-3'
           aria-label='Add'
         >
-          +
-        </button>
-        <button
-          onClick={() => onDelete?.(id)}
-          className='bg-red-600 rounded-sm px-3 py-1 text-gray-50 cursor-pointer'
-        >
-          ×
+          Update
         </button>
       </div>
 
