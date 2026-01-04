@@ -16,7 +16,6 @@ const allowedOrigins = new Set([
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // allow server-to-server or curl (no origin)
     if (!origin) return callback(null, true)
 
     if (allowedOrigins.has(origin)) {
@@ -132,6 +131,10 @@ app.post('/api/auth/login', (req, res) => {
 
 //AUTH MIDDLEWARE
 function authenticateToken(req, res, next) {
+  if (req.method === 'OPTIONS') {
+    return next()
+  }
+
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
 
