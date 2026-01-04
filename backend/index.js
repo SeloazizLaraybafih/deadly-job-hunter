@@ -15,6 +15,7 @@ app.use(
       'http://localhost:3001',
       'https://sirjobsir.ac.id',
       'https://www.sirjobsir.ac.id',
+      'https://deadly-job-hunter.vercel.app',
     ],
     credentials: true,
   })
