@@ -40,7 +40,7 @@ export default function DashboardPage() {
     async function fetchApplications() {
       setLoading(true)
       try {
-        const data = await apiFetch('/applications')
+        const data = await apiFetch('/api/applications')
         console.log('APPLICATIONS RESPONSE:', data)
         setApplications(data.applications)
       } catch (err) {
