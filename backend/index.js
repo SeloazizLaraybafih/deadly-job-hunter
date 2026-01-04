@@ -49,9 +49,13 @@ app.post('/api/auth/register', async (req, res) => {
     db.query(sql, [email, passwordHash], (err, result) => {
       if (err) {
         if (err.code === 'ER_DUP_ENTRY') {
-          return res.status(409).json({ message: 'Email already registered' })
+          return res
+            .status(409)
+            .json({ message: 'Email already registered', error: err.message })
         }
-        return res.status(500).json({ message: 'Failed to register user' })
+        return res
+          .status(500)
+          .json({ message: 'Failed to register user', error: err.message })
       }
 
       res.status(201).json({
@@ -60,7 +64,7 @@ app.post('/api/auth/register', async (req, res) => {
       })
     })
   } catch (error) {
-    res.status(500).json({ message: 'Encryption failed' })
+    res.status(500).json({ message: 'Encryption failed', error: err.message })
   }
 })
 
@@ -76,11 +80,15 @@ app.post('/api/auth/login', (req, res) => {
 
   db.query(sql, [email], async (err, results) => {
     if (err) {
-      return res.status(500).json({ message: 'Database error' })
+      return res
+        .status(500)
+        .json({ message: 'Database error', error: err.message })
     }
 
     if (results.length === 0) {
-      return res.status(401).json({ message: 'Invalid credentials' })
+      return res
+        .status(401)
+        .json({ message: 'Invalid credentials', error: err.message })
     }
 
     const user = results[0]
@@ -89,7 +97,9 @@ app.post('/api/auth/login', (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password_hash)
 
     if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid credentials' })
+      return res
+        .status(401)
+        .json({ message: 'Invalid credentials', error: err.message })
     }
 
     //Create token
@@ -136,7 +146,9 @@ app.get('/api/applications', authenticateToken, (req, res) => {
 
   db.query(sql, [userId], (err, results) => {
     if (err) {
-      return res.status(500).json({ message: 'Failed to fetch applications' })
+      return res
+        .status(500)
+        .json({ message: 'Failed to fetch applications', error: err.message })
     }
 
     res.json({
@@ -151,9 +163,10 @@ app.post('/api/applications', authenticateToken, (req, res) => {
   const { company_name, position, status, notes } = req.body
 
   if (!company_name || !position || !status) {
-    return res
-      .status(400)
-      .json({ message: 'Company, position, and status are required' })
+    return res.status(400).json({
+      message: 'Company, position, and status are required',
+      error: err.message,
+    })
   }
   const applied_date = new Date().toISOString().split('T')[0]
 
@@ -167,7 +180,9 @@ app.post('/api/applications', authenticateToken, (req, res) => {
     [userId, company_name, position, status, applied_date, notes || ''],
     (err, result) => {
       if (err) {
-        return res.status(500).json({ message: 'Failed to create application' })
+        return res
+          .status(500)
+          .json({ message: 'Failed to create application', error: err.message })
       }
 
       res.status(201).json({
@@ -190,9 +205,10 @@ app.put('/api/applications/:id', authenticateToken, (req, res) => {
   const { company_name, position, status, notes } = req.body
 
   if (!company_name || !position || !status) {
-    return res
-      .status(400)
-      .json({ message: 'Company, position, and status are required' })
+    return res.status(400).json({
+      message: 'Company, position, and status are required',
+      error: err.message,
+    })
   }
 
   const sql = `
@@ -207,13 +223,16 @@ app.put('/api/applications/:id', authenticateToken, (req, res) => {
     (err, result) => {
       if (err) {
         console.log('SQL ERROR:', err)
-        return res.status(500).json({ message: 'Failed to update application' })
+        return res
+          .status(500)
+          .json({ message: 'Failed to update application', error: err.message })
       }
 
       if (result.affectedRows === 0) {
-        return res
-          .status(404)
-          .json({ message: 'Application not found or not yours' })
+        return res.status(404).json({
+          message: 'Application not found or not yours',
+          error: err.message,
+        })
       }
 
       res.json({
@@ -238,16 +257,22 @@ app.delete('/api/applications/:id', authenticateToken, (req, res) => {
 
   db.query(sql, [applicationId, userId], (err, result) => {
     if (err) {
-      return res.status(500).json({ message: 'Failed to delete application' })
+      return res
+        .status(500)
+        .json({ message: 'Failed to delete application', error: err.message })
     }
 
     if (result.affectedRows === 0) {
-      return res
-        .status(404)
-        .json({ message: 'Application not found or not yours' })
+      return res.status(404).json({
+        message: 'Application not found or not yours',
+        error: err.message,
+      })
     }
 
-    res.json({ message: 'Application deleted successfully' })
+    res.json({
+      message: 'Application deleted successfully',
+      error: err.message,
+    })
   })
 })
 
