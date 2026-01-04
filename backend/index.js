@@ -7,16 +7,27 @@ const cors = require('cors')
 
 const app = express()
 
+const allowedOrigins = new Set([
+  'http://localhost:3001',
+  'https://sirjobsir.ac.id',
+  'https://www.sirjobsir.ac.id',
+  'https://deadly-job-hunter.vercel.app',
+])
+
 const corsOptions = {
-  origin: [
-    'http://localhost:3001',
-    'https://sirjobsir.ac.id',
-    'https://www.sirjobsir.ac.id',
-    'https://deadly-job-hunter.vercel.app',
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: (origin, callback) => {
+    // allow server-to-server or curl (no origin)
+    if (!origin) return callback(null, true)
+
+    if (allowedOrigins.has(origin)) {
+      return callback(null, true)
+    }
+
+    return callback(new Error('Not allowed by CORS'))
+  },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }
 
 app.use(cors(corsOptions))
