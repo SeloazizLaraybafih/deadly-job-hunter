@@ -7,8 +7,6 @@ const cors = require('cors')
 
 const app = express()
 
-const PORT = process.env.PORT || 5000
-
 app.use(
   cors({
     origin: [
@@ -22,7 +20,9 @@ app.use(
     credentials: true,
   })
 )
+app.options('*', cors())
 app.use(express.json())
+const PORT = process.env.PORT || 5000
 
 app.get('/api/test-db', (req, res) => {
   db.query('SELECT 1', (err, result) => {
