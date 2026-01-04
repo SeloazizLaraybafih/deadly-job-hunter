@@ -66,7 +66,7 @@ export default function DashboardPage() {
 
   const handleDelete = async (id: number) => {
     try {
-      await apiFetch(`/applications/${id}`, {
+      await apiFetch(`/api/applications/${id}`, {
         method: 'DELETE',
       })
 

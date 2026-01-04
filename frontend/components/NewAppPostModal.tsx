@@ -49,8 +49,8 @@ export default function NewApplicationModal({
 
     try {
       const endpoint = initialData
-        ? `/applications/${initialData.id}`
-        : '/applications'
+        ? `/api/applications/${initialData.id}`
+        : '/api/applications'
 
       const method = initialData ? 'PUT' : 'POST'
 
