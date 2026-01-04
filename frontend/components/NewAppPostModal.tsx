@@ -47,6 +47,13 @@ export default function NewApplicationModal({
     setLoading(true)
     setError('')
 
+    const resetForm = () => {
+      setCompany('')
+      setPosition('')
+      setStatus('applied')
+      setNotes('')
+    }
+
     try {
       const endpoint = initialData
         ? `/api/applications/${initialData.id}`
@@ -67,6 +74,7 @@ export default function NewApplicationModal({
 
       onSuccess?.(data)
       onClose()
+      resetForm()
     } catch (err) {
       if (err instanceof Error) setError(err.message)
       else setError('Failed to save application')
