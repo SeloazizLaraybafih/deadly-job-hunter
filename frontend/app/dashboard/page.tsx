@@ -80,10 +80,14 @@ export default function DashboardPage() {
   const progressApp = applications.filter((app) =>
     progressStatus.includes(app.status)
   )
-
-  const respondedRate = Number(
-    ((progressApp.length / applications.length) * 100).toFixed(1)
-  )
+  let respondedRate
+  if (applications.length === 0) {
+    respondedRate = 0
+  } else {
+    respondedRate = Number(
+      ((progressApp.length / applications.length) * 100).toFixed(1)
+    )
+  }
 
   if (loading) {
     return (

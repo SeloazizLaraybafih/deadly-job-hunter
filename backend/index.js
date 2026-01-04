@@ -17,6 +17,8 @@ app.use(
       'https://www.sirjobsir.ac.id',
       'https://deadly-job-hunter.vercel.app',
     ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   })
 )
