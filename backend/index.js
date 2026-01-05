@@ -299,7 +299,6 @@ app.delete('/api/applications/:id', authenticateToken, (req, res) => {
 
     res.json({
       message: 'Application deleted successfully',
-      error: err.message,
     })
   })
 })
